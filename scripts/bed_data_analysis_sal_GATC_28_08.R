@@ -1,5 +1,6 @@
-install.packages('skimr', 'here', 'kableExtra')
-install.packages('paletteer')
+require(extrafont)
+    # need only do this once!
+font_import(pattern="[A/a]rial", prompt=FALSE)
 library(ggplot2)
 library(dplyr)
 library(tidyverse)
@@ -24,20 +25,20 @@ status_pal <- paper_pal[1:4]
 violin_color <- c("#C49C94FF","#F7B6D2FF","#C7C7C7FF")
 chi_test_color <- c("#7F7F7FFF","#C7C7C7FF")
 status_pal_2 <- c("#AEC7E8FF","#FFBB78FF","#98DF8AFF","#FF9896FF")
-data_08 <- read.csv(paste(working_dir,"LSP-1.GATC.bed", sep=""), sep="", header = FALSE,
+data_08 <- read.csv(paste(working_dir,"LSP-1.GATC.bed", sep="/"), sep="", header = FALSE,
                     col.names = c('chrom', 'm_start', 'm_stop', 'met_type', 'total_reads', 'met_dir', 'met_st_1', 'met_st_2', 'color','reads_all', 'methyl', 'methyl_reads', 'non_methyl_reads',
                                   'v1','v2','v3', 'v4', 'v5', 'chrom2', 'site_start', 'site_stop', 'site', 'v6', 'dir',
                                   'chrom3', 'f_start', 'f_stop', 'f_dir','f_type','locus_tag','id1','id2','locus_tag1','id11','id21','d_chrom','d_start', 'd_stop','d_old','d_id','domain'))
-data_09 <- read.csv(paste(working_dir,"MEP-1.GATC.bed", sep=""), sep="", header = FALSE,
+data_09 <- read.csv(paste(working_dir,"MEP-1.GATC.bed", sep="/"), sep="", header = FALSE,
                     col.names = c('chrom', 'm_start', 'm_stop', 'met_type', 'total_reads', 'met_dir', 'met_st_1', 'met_st_2', 'color','reads_all', 'methyl', 'methyl_reads', 'non_methyl_reads',
                                   'v1','v2','v3', 'v4', 'v5', 'chrom2', 'site_start', 'site_stop', 'site', 'v6', 'dir',
                                   'chrom3', 'f_start', 'f_stop', 'f_dir','f_type','locus_tag','id1','id2','locus_tag1','id11','id21','d_chrom','d_start', 'd_stop','d_old','d_id','domain'))
-data_10 <- read.csv(paste(working_dir,"MEP-2.GATC.bed", sep=""), sep="", header = FALSE,
+data_10 <- read.csv(paste(working_dir,"MEP-2.GATC.bed", sep="/"), sep="", header = FALSE,
                     col.names = c('chrom', 'm_start', 'm_stop', 'met_type', 'total_reads', 'met_dir', 'met_st_1', 'met_st_2', 'color','reads_all', 'methyl', 'methyl_reads', 'non_methyl_reads',
                                   'v1','v2','v3', 'v4', 'v5', 'chrom2', 'site_start', 'site_stop', 'site', 'v6', 'dir',
                                   'chrom3', 'f_start', 'f_stop', 'f_dir','f_type','locus_tag','id1','id2','locus_tag1','id11','id21','d_chrom','d_start', 'd_stop','d_old','d_id','domain'))
 
-data_12 <- read.csv(paste(working_dir,"LSP-2.GATC.bed", sep=""), sep="", header = FALSE,
+data_12 <- read.csv(paste(working_dir,"LSP-2.GATC.bed", sep="/"), sep="", header = FALSE,
                     col.names = c('chrom', 'm_start', 'm_stop', 'met_type', 'total_reads', 'met_dir', 'met_st_1', 'met_st_2', 'color','reads_all', 'methyl', 'methyl_reads', 'non_methyl_reads',
                                   'v1','v2','v3', 'v4', 'v5', 'chrom2', 'site_start', 'site_stop', 'site', 'v6', 'dir',
                                   'chrom3', 'f_start', 'f_stop', 'f_dir','f_type','locus_tag','id1','id2','locus_tag1','id11','id21','d_chrom','d_start', 'd_stop','d_old','d_id','domain'))

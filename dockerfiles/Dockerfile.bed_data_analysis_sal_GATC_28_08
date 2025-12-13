@@ -39,8 +39,8 @@ RUN apt-get update && apt-get install -y \
     && R -e 'install.packages(c("multimode", "ggVennDiagram", "tm", "proustr", "VennDiagram", "viridis", "scales", "data.table", "corrplot"))'
 
 # Copy font files
-#COPY original_r_project/arial_narrow/* /usr/share/fonts/truetype/msttcorefonts
-#RUN R -e 'library(extrafont); font_import(prompt=FALSE)'
+COPY fonts/arial_narrow/* /usr/share/fonts/truetype/msttcorefonts/
+RUN R -e 'library(extrafont); font_import(prompt=FALSE)'
 
 # Set working directory
 WORKDIR /app
