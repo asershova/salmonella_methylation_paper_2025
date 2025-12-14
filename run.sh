@@ -4,7 +4,13 @@
 
 #docker run -v $(pwd)/results:/app/results:rw bed_data_analysis_sal_gatc:latest
 
-docker build -t bed_data_analysis_sal_ccwgg:latest -f dockerfiles/Dockerfile.bed_data_analysis_sal_CCWGG_7_09_2 .
+#docker build -t bed_data_analysis_sal_ccwgg:latest -f dockerfiles/Dockerfile.bed_data_analysis_sal_CCWGG_7_09_2 .
 
-docker run -v $(pwd)/results:/app/results:rw bed_data_analysis_sal_ccwgg:latest
+#docker run -v $(pwd)/results:/app/results:rw bed_data_analysis_sal_ccwgg:latest
+
+docker build -t bed_data_analysis_sal_atgcat:latest -f dockerfiles/Dockerfile.bed_data_analysis_sal_ATGCAT_7_09_2 .
+
+docker run -v $(pwd)/results:/app/results:rw bed_data_analysis_sal_atgcat:latest
+
+
 
