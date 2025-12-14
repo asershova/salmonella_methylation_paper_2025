@@ -1,6 +1,6 @@
+options(warn=2)
 require(extrafont)
-    # need only do this once!
-#font_import(pattern="[A/a]rial", prompt=FALSE)
+extrafont::loadfonts(device="all")
 library(ggplot2)
 library(dplyr)
 library(tidyverse)
@@ -12,6 +12,7 @@ library(ggsci)
 library("GGally")
 library(RColorBrewer)
 library(hrbrthemes)
+import_econ_sans()
 library("ggpubr")
 
 working_dir = "/app/data" # the path to the working directory, you should put your own
@@ -70,13 +71,14 @@ sample_pal <- c("#BCBD22FF","#DBDB8DFF","#17BECFFF","#9EDAE5FF")
 reordered_data<-data_all_methyl %>%
   mutate(sample = fct_relevel(sample, 
                               "MEP-1", "MEP-2", "LSP-1", "LSP-2"))
+
 site_jitter<-ggplot(reordered_data[reordered_data$total_reads>2&reordered_data$met_type==meth_type,], 
                       aes(x = factor(rel_pos), y = methyl, color = sample)) + 
   geom_jitter(position=position_jitterdodge(dodge.width = 0.7), alpha = 0.4) +
   labs(x = paste("position in ",site, sep = ""), y = "methylation (%)") +
   scale_color_manual(values=sample_pal)+
   scale_x_discrete(labels=c("0" = "G", "1" = "A", "2" = "T", "3" = "C")) +
-  theme_ipsum(base_family = 'Arial', base_size = 12) +
+  theme_ipsum_es(base_family = 'Arial', base_size = 12) +
   theme(
     axis.title.x = element_blank(), #text(size = 16, vjust = 0.5, hjust = 0.5),
     axis.text.x = element_text(size = 12, vjust = 0.5, hjust = 0.5, color= c("black", "#D62728FF", "black", "black")),
@@ -97,7 +99,7 @@ site_jitter_total_reads<-ggplot(reordered_data[reordered_data$total_reads>1&reor
   geom_jitter(position=position_jitterdodge(dodge.width = 0.7), alpha = 0.4) +
   labs(x = paste("position in ",site, sep = ""), y = "total reads") +
   scale_x_discrete(labels=c("0" = "G", "1" = "A", "2" = "T", "3" = "C")) +
-  theme_ipsum(base_family = 'Arial', base_size = 12) +
+  theme_ipsum_es(base_family = 'Arial', base_size = 12) +
   theme(
     axis.title.x = element_blank(),
     axis.text.x = element_text(size = 12, vjust = 0.5, hjust = 0.5, color= c("black", "#D62728FF", "black", "black")),
@@ -186,11 +188,11 @@ r_2 <- rf_2(32)
 r_2
 heat_all <-ggplot(data_all_methyl_a_samples_pv_wide_wa, aes(MEP_wt_mean,LSP_wt_mean)) + 
   stat_bin2d(bins=32) + 
-  ylim(0,100) +
+  # ylim(0,100) +
   scale_fill_gradientn(colours=r_2, breaks = c(1,1000, 2000),labels=c(1,1000, 2000)) +
   labs(x = "MEP, methylation (%)",
        y = "LSP, methylation (%)")+
-  theme_ipsum(base_family = 'Arial', base_size = 12) +
+  theme_ipsum_es(base_family = 'Arial', base_size = 12) +
   theme(
     axis.title.y = element_text(size = 12, vjust = 0.8, hjust = 0.5),
     axis.title.x = element_text(size = 12, vjust = 0.8, hjust = 0.5),
@@ -274,7 +276,7 @@ stacked_bar<-ggplot(summary_1_1,
   scale_x_discrete(labels=label)+
   scale_y_continuous(labels = scales::label_percent(suffix="")) +#scales::percent) +
   coord_cartesian(ylim = c(0, 1.8)) +
-  theme_ipsum(base_family = 'Arial', base_size = 12) +
+  theme_ipsum_es(base_family = 'Arial', base_size = 12) +
   theme(
     axis.title.y = element_text(size = 12, vjust = 0.8, hjust = 0.5, margin = margin(0, 10, 0, 0)),
     axis.title.x = element_blank(), #text(size = 14, vjust = 0.8, hjust = 0.5),
@@ -324,7 +326,7 @@ stacked_domains <- ggplot(unique_methyl_status_feature_domain_summary_2[unique_m
   scale_x_discrete(labels=label_2)+
   scale_y_continuous(labels = scales::label_percent(suffix="")) +#scales::percent) +
   scale_fill_manual(values=gatc_pal) +
-  theme_ipsum(base_family = 'Arial', base_size = 12) +
+  theme_ipsum_es(base_family = 'Arial', base_size = 12) +
   theme(
     axis.title.x = element_blank(), #text(size = 14, vjust = 0.8, hjust = 0.5),
     axis.title.y = element_text(size = 12, vjust = 0.8, hjust = 0.5, margin = margin(0, 10, 0, 0)),
@@ -362,8 +364,9 @@ summary_inter<- data_all_methyl_a_samples_pv_wide_wa[data_all_methyl_a_samples_p
   group_by(feature_id) %>%
   summarize(n = n(), .groups="keep")
 ggplot(summary_inter, aes(x=n)) +
-  geom_density(color="#C7C7C7FF") +
-  xlim(0,12)
+  geom_density(color="#C7C7C7FF") 
+  # +
+  # xlim(0,12)
 feature_id_underm <- unique(data_all_methyl_a_samples_pv_wide_wa[data_all_methyl_a_samples_pv_wide_wa$methyl_status!="Constitutive"&
                                                             data_all_methyl_a_samples_pv_wide_wa$feature=="intergenic",]$feature_id)
 feature_id_underm

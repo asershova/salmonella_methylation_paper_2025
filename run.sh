@@ -1,16 +1,31 @@
 #!/bin/bash
 #run all scripts to produce all results
-#docker build -t bed_data_analysis_sal_gatc:latest -f dockerfiles/Dockerfile.bed_data_analysis_sal_GATC_28_08 .
+if [ scripts/bed_data_analysis_sal_GATC_28_08.R -nt results/GATC_jitter.tiff \
+  -o dockerfiles/Dockerfile.bed_data_analysis_sal_GATC_28_08 -nt results/GATC_jitter.tiff \
+   ]; then
+  echo "======= Rebuilding bed_data_analysis_sal_GATC_28_08 ======="
+  docker build -t bed_data_analysis_sal_gatc:latest -f dockerfiles/Dockerfile.bed_data_analysis_sal_GATC_28_08 .
 
-#docker run -v $(pwd)/results:/app/results:rw bed_data_analysis_sal_gatc:latest
+  docker run -v $(pwd)/results:/app/results:rw bed_data_analysis_sal_gatc:latest
+fi
 
-#docker build -t bed_data_analysis_sal_ccwgg:latest -f dockerfiles/Dockerfile.bed_data_analysis_sal_CCWGG_7_09_2 .
+if [ scripts/bed_data_analysis_sal_CCWGG_7_09_2.R -nt results/CCWGG_jitter.tiff \
+  -o dockerfiles/Dockerfile.bed_data_analysis_sal_CCWGG_7_09_2 -nt results/CCWGG_jitter.tiff \
+   ]; then
+  echo "======= Rebuilding bed_data_analysis_sal_CCWGG_7_09_2 ======="
+  docker build -t bed_data_analysis_sal_ccwgg:latest -f dockerfiles/Dockerfile.bed_data_analysis_sal_CCWGG_7_09_2 .
 
-#docker run -v $(pwd)/results:/app/results:rw bed_data_analysis_sal_ccwgg:latest
+  docker run -v $(pwd)/results:/app/results:rw bed_data_analysis_sal_ccwgg:latest
+fi
 
-docker build -t bed_data_analysis_sal_atgcat:latest -f dockerfiles/Dockerfile.bed_data_analysis_sal_ATGCAT_7_09_2 .
+if [ bed_data_analysis_sal_ATGCAT_7_09_2.R -nt results/ATGCAT_jitter.tiff \
+  -o dockerfiles/Dockerfile.bed_data_analysis_sal_ATGCAT_7_09_2 -nt results/ATGCAT_jitter.tiff
+   ]; then
+  echo "======= Rebuilding bed_data_analysis_sal_ATGCAT_7_09_2 ======="
+  docker build -t bed_data_analysis_sal_atgcat:latest -f dockerfiles/Dockerfile.bed_data_analysis_sal_ATGCAT_7_09_2 .
 
-docker run -v $(pwd)/results:/app/results:rw bed_data_analysis_sal_atgcat:latest
+  docker run -v $(pwd)/results:/app/results:rw bed_data_analysis_sal_atgcat:latest
+fi
 
 
 
