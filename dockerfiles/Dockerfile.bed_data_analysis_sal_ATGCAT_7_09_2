@@ -25,6 +25,7 @@ RUN apt-get update && apt-get install -y \
     libjpeg-dev \
     libglu1-mesa-dev \
     libgl2ps-dev \
+    imagemagick \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && R -e "install.packages(c('remotes', 'devtools'))" \
@@ -38,10 +39,6 @@ RUN apt-get update && apt-get install -y \
     && R -e 'install.packages(c("ggsci", "GGally", "RColorBrewer", "ggpubr"))' \
     && R -e 'install.packages(c("multimode", "ggVennDiagram", "tm", "proustr", "VennDiagram", "viridis", "scales", "data.table", "corrplot"))'
 
-RUN apt-get update && apt-get install -y \
-    imagemagick \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
 # Copy font files
 COPY fonts/liberation-fonts-ttf-2.00.1/* /usr/share/fonts/truetype/msttcorefonts/
 COPY fonts/*.ttf /usr/share/fonts/truetype/msttcorefonts/
