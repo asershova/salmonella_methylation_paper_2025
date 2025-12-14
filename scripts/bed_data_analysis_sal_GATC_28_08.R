@@ -1,6 +1,6 @@
 require(extrafont)
     # need only do this once!
-font_import(pattern="[A/a]rial", prompt=FALSE)
+#font_import(pattern="[A/a]rial", prompt=FALSE)
 library(ggplot2)
 library(dplyr)
 library(tidyverse)
