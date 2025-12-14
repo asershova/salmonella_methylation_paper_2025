@@ -184,7 +184,6 @@ r_2 <- rf_2(32)
 r_2
 heat_all <-ggplot(data_all_methyl_a_samples_pv_wide_wa, aes(MEP_wt_mean,LSP_wt_mean)) + 
   stat_bin2d(bins=32) + 
-  ylim(0,100) +
   scale_fill_gradientn(colours=r_2, breaks = c(1,10, 20,30),labels=c(1,10, 20,30)) +
   labs(x = "MEP, methylation (%)",
        y = "LSP, methylation (%)")+

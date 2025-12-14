@@ -12,7 +12,7 @@ library(ggsci)
 library("GGally")
 library(RColorBrewer)
 library(hrbrthemes)
-import_econ_sans()
+#import_econ_sans()
 library("ggpubr")
 
 working_dir = "/app/data" # the path to the working directory, you should put your own
@@ -21,7 +21,6 @@ site="GATC"
 sites_genome = 39428
 meth_type = 'a'
 paper_pal <-paletteer::paletteer_d("ggsci::category20_d3")
-paper_pal
 status_pal <- paper_pal[1:4]
 violin_color <- c("#C49C94FF","#F7B6D2FF","#C7C7C7FF")
 chi_test_color <- c("#7F7F7FFF","#C7C7C7FF")
@@ -78,7 +77,7 @@ site_jitter<-ggplot(reordered_data[reordered_data$total_reads>2&reordered_data$m
   labs(x = paste("position in ",site, sep = ""), y = "methylation (%)") +
   scale_color_manual(values=sample_pal)+
   scale_x_discrete(labels=c("0" = "G", "1" = "A", "2" = "T", "3" = "C")) +
-  theme_ipsum_es(base_family = 'Arial', base_size = 12) +
+  theme_ipsum(base_family = 'Arial', base_size = 12) +
   theme(
     axis.title.x = element_blank(), #text(size = 16, vjust = 0.5, hjust = 0.5),
     axis.text.x = element_text(size = 12, vjust = 0.5, hjust = 0.5, color= c("black", "#D62728FF", "black", "black")),
@@ -88,7 +87,6 @@ site_jitter<-ggplot(reordered_data[reordered_data$total_reads>2&reordered_data$m
     legend.title = element_blank()
   )
 
-site_jitter
 ggsave(filename = paste(site,"_jitter.tiff", sep=""), plot =site_jitter, path = results_dir,
        scale = 1, width = 89,
        height = 78, units = c("mm"),
@@ -99,15 +97,13 @@ site_jitter_total_reads<-ggplot(reordered_data[reordered_data$total_reads>1&reor
   geom_jitter(position=position_jitterdodge(dodge.width = 0.7), alpha = 0.4) +
   labs(x = paste("position in ",site, sep = ""), y = "total reads") +
   scale_x_discrete(labels=c("0" = "G", "1" = "A", "2" = "T", "3" = "C")) +
-  theme_ipsum_es(base_family = 'Arial', base_size = 12) +
+  theme_ipsum(base_family = 'Arial', base_size = 12) +
   theme(
     axis.title.x = element_blank(),
     axis.text.x = element_text(size = 12, vjust = 0.5, hjust = 0.5, color= c("black", "#D62728FF", "black", "black")),
     axis.title.y = element_text(size = 12, vjust = 0.5, hjust = 0.5),
     plot.margin=unit(c(10,10,10,10), "pt"),
   )
-
-site_jitter_total_reads
 
 ggsave(filename = paste(site,"_jitter_total_reads.tiff", sep=""), plot =site_jitter, path = results_dir,
        scale = 1, width = 89,
@@ -188,11 +184,10 @@ r_2 <- rf_2(32)
 r_2
 heat_all <-ggplot(data_all_methyl_a_samples_pv_wide_wa, aes(MEP_wt_mean,LSP_wt_mean)) + 
   stat_bin2d(bins=32) + 
-  # ylim(0,100) +
   scale_fill_gradientn(colours=r_2, breaks = c(1,1000, 2000),labels=c(1,1000, 2000)) +
   labs(x = "MEP, methylation (%)",
        y = "LSP, methylation (%)")+
-  theme_ipsum_es(base_family = 'Arial', base_size = 12) +
+  theme_ipsum(base_family = 'Arial', base_size = 12) +
   theme(
     axis.title.y = element_text(size = 12, vjust = 0.8, hjust = 0.5),
     axis.title.x = element_text(size = 12, vjust = 0.8, hjust = 0.5),
@@ -203,7 +198,7 @@ heat_all <-ggplot(data_all_methyl_a_samples_pv_wide_wa, aes(MEP_wt_mean,LSP_wt_m
   geom_vline(xintercept = 35) +
   geom_hline(yintercept = 35)
 
-heat_all
+
 ggsave(filename = paste(site,"_heat_all_ppt.tiff",sep=""), plot =heat_all, path = results_dir,
        scale = 1, width = 89,
        height = 78, units = c("mm"),
@@ -276,7 +271,7 @@ stacked_bar<-ggplot(summary_1_1,
   scale_x_discrete(labels=label)+
   scale_y_continuous(labels = scales::label_percent(suffix="")) +#scales::percent) +
   coord_cartesian(ylim = c(0, 1.8)) +
-  theme_ipsum_es(base_family = 'Arial', base_size = 12) +
+  theme_ipsum(base_family = 'Arial', base_size = 12) +
   theme(
     axis.title.y = element_text(size = 12, vjust = 0.8, hjust = 0.5, margin = margin(0, 10, 0, 0)),
     axis.title.x = element_blank(), #text(size = 14, vjust = 0.8, hjust = 0.5),
@@ -288,7 +283,6 @@ stacked_bar<-ggplot(summary_1_1,
     legend.title = element_blank()
     
   )
-stacked_bar
 ggsave(filename = paste(site,"_stacked_bar_all.tiff",sep=""), plot =stacked_bar, path = results_dir,
        scale = 1, width = 89,
        height = 78, units = c("mm"), 
@@ -300,7 +294,7 @@ unique_methyl_status_feature_domain[unique_methyl_status_feature_domain$methyl_s
 
 
 gatc_pal<-status_pal_2[2:4]
-gatc_pal
+
 unique_methyl_status_feature_domain_summary_2 <- unique_methyl_status_feature_domain[unique_methyl_status_feature_domain$dna!="plasmid",] %>%
   group_by(methyl_status,domain) %>%
   summarize(n = n(), .groups="keep")
@@ -326,7 +320,7 @@ stacked_domains <- ggplot(unique_methyl_status_feature_domain_summary_2[unique_m
   scale_x_discrete(labels=label_2)+
   scale_y_continuous(labels = scales::label_percent(suffix="")) +#scales::percent) +
   scale_fill_manual(values=gatc_pal) +
-  theme_ipsum_es(base_family = 'Arial', base_size = 12) +
+  theme_ipsum(base_family = 'Arial', base_size = 12) +
   theme(
     axis.title.x = element_blank(), #text(size = 14, vjust = 0.8, hjust = 0.5),
     axis.title.y = element_text(size = 12, vjust = 0.8, hjust = 0.5, margin = margin(0, 10, 0, 0)),
@@ -336,8 +330,7 @@ stacked_domains <- ggplot(unique_methyl_status_feature_domain_summary_2[unique_m
     legend.spacing = unit(1, "mm"),
     legend.title = element_blank()
   )
-stacked_domains
-gatc_pal
+
 ggsave(filename = paste(site,"_dom_stacked_bar_chrom.tiff", sep=""), plot =stacked_domains, path = results_dir,
        scale = 1, width = 89,
        height = 78, units = c("mm"),
@@ -345,8 +338,6 @@ ggsave(filename = paste(site,"_dom_stacked_bar_chrom.tiff", sep=""), plot =stack
 figure <- ggarrange(site_jitter, heat_all, stacked_bar,stacked_domains,
                     labels = c("A", "B", "C", "D"),
                     ncol = 2, nrow = 2, vjust=1)
-figure
-dev.off()
 ggsave(filename = paste(site,"_figure_d3col_2.tiff", sep=""), plot =figure, path = results_dir,
        scale = 1, width = 180,
        height = 156, units = c("mm"),
@@ -369,7 +360,7 @@ ggplot(summary_inter, aes(x=n)) +
   # xlim(0,12)
 feature_id_underm <- unique(data_all_methyl_a_samples_pv_wide_wa[data_all_methyl_a_samples_pv_wide_wa$methyl_status!="Constitutive"&
                                                             data_all_methyl_a_samples_pv_wide_wa$feature=="intergenic",]$feature_id)
-feature_id_underm
+
 data_all_methyl_a_samples_pv_wide_wa_underm <- data_all_methyl_a_samples_pv_wide_wa[data_all_methyl_a_samples_pv_wide_wa$feature_id%in%feature_id_underm,]
 summary_inter_under<- data_all_methyl_a_samples_pv_wide_wa_underm %>%
   group_by(feature_id, methyl_status) %>%
