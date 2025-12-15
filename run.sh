@@ -27,5 +27,12 @@ if [ bed_data_analysis_sal_ATGCAT_7_09_2.R -nt results/ATGCAT_jitter.tiff \
   docker run -v $(pwd)/results:/app/results:rw bed_data_analysis_sal_atgcat:latest
 fi
 
+if [ gene_expression_vis_salmonella_fin -nt results/Fig1.RM_expression.tiff \
+  -o dockerfiles/Dockerfile.gene_expression_vis_salmonella_fin -nt results/Fig1.RM_expression.tiff \
+   ]; then
+  echo "======= Rebuilding gene_expression_vis_salmonella_fin ======="
+  docker build -t gene_expression_vis_salmonella_fin:latest -f dockerfiles/Dockerfile.gene_expression_vis_salmonella_fin .
 
+  docker run -v $(pwd)/results:/app/results:rw gene_expression_vis_salmonella_fin:latest
+fi
 

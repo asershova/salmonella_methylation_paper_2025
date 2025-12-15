@@ -1,0 +1,8 @@
+sample_id	description	group	rep
+SRR951029	Growth in Lennox broth to OD600 0.3	MEP	1
+SRR951030	Growth in Lennox broth to OD600 0.3	MEP	2
+SRR951035	Growth in Lennox broth to OD600 2.0	ESP	12
+SRR951036	Growth in Lennox broth to OD600 2.0	ESP	21
+SRR951038	Growth in Lennox broth to OD600 2.0 + 6 h	LSP	1
+SRR951039	Growth in Lennox broth to OD600 2.0 + 6 h	LSP	2
+
