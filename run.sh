@@ -35,4 +35,29 @@ if [ gene_expression_vis_salmonella_fin -nt results/Fig1.RM_expression.tiff \
 
   docker run -v $(pwd)/results:/app/results:rw gene_expression_vis_salmonella_fin:latest
 fi
+if [ DEM_transcriptomic_annotation_GATC_fin -nt results/GATC_transcriptomic_figure_5.tiff \
+  -o dockerfiles/Dockerfile.DEM_transcriptomic_annotation_GATC_fin -nt results/GATC_transcriptomic_figure_5.tiff \
+   ]; then
+  echo "======= Rebuilding DEM_transcriptomic_annotation_GATC_fin ======="
+  docker build -t dem_transcriptomic_annotation_gatc_fin:latest -f dockerfiles/Dockerfile.DEM_transcriptomic_annotation_GATC_fin .
+
+  docker run -v $(pwd)/results:/app/results:rw dem_transcriptomic_annotation_gatc_fin:latest
+fi
+
+if [ DEM_transcriptomic_annotation_CCWGG_fin -nt results/CCWGG_transcriptomic_figure_6.tiff \
+  -o dockerfiles/Dockerfile.DEM_transcriptomic_annotation_CCWGG_fin -nt results/CCWGG_transcriptomic_figure_6.tiff \
+   ]; then
+  echo "======= Rebuilding DEM_transcriptomic_annotation_CCWGG_fin ======="
+  docker build -t dem_transcriptomic_annotation_ccwgg_fin:latest -f dockerfiles/Dockerfile.DEM_transcriptomic_annotation_CCWGG_fin .
+
+  docker run -v $(pwd)/results:/app/results:rw dem_transcriptomic_annotation_ccwgg_fin:latest
+fi
+if [ DEM_transcriptomic_annotation_ATGCAT_fin -nt results/ATGCAT_transcriptomic_figure_7.tiff \
+  -o dockerfiles/Dockerfile.DEM_transcriptomic_annotation_ATGCAT_fin -nt results/ATGCAT_transcriptomic_figure_7.tiff \
+   ]; then
+  echo "======= Rebuilding DEM_transcriptomic_annotation_ATGCAT_fin ======="
+  docker build -t dem_transcriptomic_annotation_atgcat_fin:latest -f dockerfiles/Dockerfile.DEM_transcriptomic_annotation_ATGCAT_fin .
+
+  docker run -v $(pwd)/results:/app/results:rw dem_transcriptomic_annotation_atgcat_fin:latest
+fi
 
