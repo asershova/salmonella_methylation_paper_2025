@@ -18,7 +18,7 @@ if [ scripts/bed_data_analysis_sal_CCWGG_7_09_2.R -nt results/CCWGG_jitter.tiff 
   docker run -v $(pwd)/results:/app/results:rw bed_data_analysis_sal_ccwgg:latest
 fi
 
-if [ bed_data_analysis_sal_ATGCAT_7_09_2.R -nt results/ATGCAT_jitter.tiff \
+if [ scripts/bed_data_analysis_sal_ATGCAT_7_09_2.R -nt results/ATGCAT_jitter.tiff \
   -o dockerfiles/Dockerfile.bed_data_analysis_sal_ATGCAT_7_09_2 -nt results/ATGCAT_jitter.tiff \
    ]; then
   echo "======= Rebuilding bed_data_analysis_sal_ATGCAT_7_09_2 ======="

@@ -25,6 +25,7 @@ RUN apt-get update && apt-get install -y \
     libjpeg-dev \
     libglu1-mesa-dev \
     libgl2ps-dev \
+    imagemagick \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && R -e "install.packages(c('remotes', 'devtools'))" \

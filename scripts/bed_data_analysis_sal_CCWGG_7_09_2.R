@@ -329,6 +329,10 @@ ggsave(filename = paste(site,"_figure_d3col_4.tiff", sep=""), plot =figure, path
        scale = 1, width = 180,
        height = 156, units = c("mm"),
        dpi = 300, bg = "white")
+system(paste("convert ",results_dir, "/", site,"_figure_d3col_4.tiff ",
+	              "-fill white -stroke white -draw ",
+		      "'rectangle 100,975 228,1150' ",
+	                results_dir, "/", site,"_figure_d3col_4_patched.tiff", sep="")) 
 ggsave(filename = paste(site,"_figure_4.png", sep=""), plot =figure, path = results_dir,
        scale = 1, width = 180,
        height = 156, units = c("mm"),
