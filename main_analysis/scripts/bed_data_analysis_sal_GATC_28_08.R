@@ -207,9 +207,12 @@ ggsave(filename = paste(site,"_heat_all_ppt.tiff",sep=""), plot =heat_all, path 
 data_all_methyl_a_samples_pv_wide_wa <- data_all_methyl_a_samples_pv_wide_wa %>% 
   mutate(feature = ifelse(f_type=="intergenic", 
                           "intergenic","intragenic")) 
+colnames_data <- colnames(data_all_methyl_a_samples_pv_wide_wa)
+colnames_data_new <- c(colnames_data[2:4], colnames_data[1], colnames_data[8], colnames_data[5], colnames_data[6:7], colnames_data[9:29])
 
+data_all_methyl_a_samples_pv_wide_wa2 <- data_all_methyl_a_samples_pv_wide_wa[, colnames_data_new]
 #file for transcriptomic analysis
-write.table(data_all_methyl_a_samples_pv_wide_wa, file = paste(results_dir,"/",site,"_data_all_flat_table_weight_av.csv",sep=""),
+write.table(data_all_methyl_a_samples_pv_wide_wa2, file = paste(results_dir,"/",site,"_data_all_flat_table_weight_av.csv",sep=""),
             sep = "\t", row.names = F)
 
 

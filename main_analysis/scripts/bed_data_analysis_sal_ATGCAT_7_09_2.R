@@ -140,7 +140,7 @@ data_all_methyl_a_plasmid <- reordered_data[reordered_data$rel_pos==meth_pos &
 ## weight is a read coverage from data_summary_a_all_dna
 ##calculate a pivot table with methylation data
 data_all_methyl_a_samples_pv <- data_all_methyl_a %>%
-  group_by(sample,chrom,pos_id, f_type, domain)%>%
+  group_by(sample,chrom,pos_id,m_start,m_stop,met_dir,site_start, site_stop,f_type,locus_tag,id2,f_dir,locus_tag1,id21,f_start,f_stop,domain)%>%
   summarize(mean_methyl = mean(methyl), .groups = "keep")
 data_all_methyl_a_samples_pv_wide <- data_all_methyl_a_samples_pv%>% 
   pivot_wider(names_from = sample, 
@@ -206,16 +206,19 @@ ggsave(filename = paste(site,"_heat_all.tiff",sep=""), plot =heat_all, path = re
 data_all_methyl_a_samples_pv_wide_wa <- data_all_methyl_a_samples_pv_wide_wa %>% 
   mutate(feature = ifelse(f_type=="intergenic", 
                           "intergenic","intragenic")) 
+colnames_data <- colnames(data_all_methyl_a_samples_pv_wide_wa)
+colnames_data_new <- c(colnames_data[2:4], colnames_data[1], colnames_data[8], colnames_data[5], colnames_data[6:7], colnames_data[9:29])
 
+data_all_methyl_a_samples_pv_wide_wa2 <- data_all_methyl_a_samples_pv_wide_wa[, colnames_data_new]
 #annotation
-gene_annotation <- unique(select(data_all_methyl_a, c("pos_id","m_start", "m_stop",
-                                                      "site_start", "site_stop", "f_type", 
-                                                      "f_dir","f_start", "f_stop","locus_tag", "id2", "locus_tag1", "id21")))
+#gene_annotation <- unique(select(data_all_methyl_a, c("pos_id","m_start", "m_stop",
+#                                                      "site_start", "site_stop", "f_type", 
+#                                                      "f_dir","f_start", "f_stop","locus_tag", "id2", "locus_tag1", "id21")))
 
 
-data_all_methyl_a_samples_pv_wide_wa_anno<-merge(data_all_methyl_a_samples_pv_wide_wa,gene_annotation, by="pos_id")
+#data_all_methyl_a_samples_pv_wide_wa_anno<-merge(data_all_methyl_a_samples_pv_wide_wa,gene_annotation, by="pos_id")
 #file for transcriptomic analysis
-write.table(data_all_methyl_a_samples_pv_wide_wa_anno, file = paste(results_dir,"/",site,"_data_all_flat_table_weight_av.csv",sep=""),
+write.table(data_all_methyl_a_samples_pv_wide_wa2, file = paste(results_dir,"/",site,"_data_all_flat_table_weight_av.csv",sep=""),
             sep = "\t", row.names = F)
 
 #select unique positions for methyl status/feature barchart
