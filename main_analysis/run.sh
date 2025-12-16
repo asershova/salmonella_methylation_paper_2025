@@ -60,4 +60,12 @@ if [ DEM_transcriptomic_annotation_ATGCAT_fin -nt results/ATGCAT_transcriptomic_
 
   docker run -v $(pwd)/results:/app/results:rw dem_transcriptomic_annotation_atgcat_fin:latest
 fi
+if [ GATC_comparison_fin_intergenic -nt results/all_vs_all_fig_v_figure_8_AB.tiff \
+  -o dockerfiles/Dockerfile.GATC_comparison_fin_intergenic -nt results/ATGCAT_transcriptomic_figure_7.tiff \
+   ]; then
+  echo "======= Rebuilding intergenic GATC literature data comparisons ======="
+  docker build -t gatc_comparison_fin_intergenic:latest -f dockerfiles/Dockerfile.GATC_comparison_fin_intergenic .
+
+  docker run -v $(pwd)/results:/app/results:rw gatc_comparison_fin_intergenic:latest
+fi
 
