@@ -68,4 +68,11 @@ if [ GATC_comparison_fin_intergenic -nt results/all_vs_all_fig_v_figure_8_AB.tif
 
   docker run -v $(pwd)/results:/app/results:rw gatc_comparison_fin_intergenic:latest
 fi
+if [ NanoViz_fin -nt results/pheatmap_plus_lsp_qval_fig9_D.tiff \
+  -o dockerfiles/Dockerfile.NanoViz_fin -nt results/pheatmap_plus_lsp_qval_fig9_D.tiff \
+   ]; then
+  echo "======= Rebuilding heterogeneity example ======="
+  docker build -t nanoviz_fin:latest -f dockerfiles/Dockerfile.NanoViz_fin .
 
+  docker run -v $(pwd)/results:/app/results:rw nanoviz_fin:latest
+fi
