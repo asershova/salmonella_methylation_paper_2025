@@ -18,3 +18,20 @@ if [ scripts/test_coverage_18_12_25.R -nt results/seq_depth_figure_S1.3.tiff \
   docker run -v $(pwd)/results:/app/results:rw test_coverage_18_12_25:latest
 fi
 
+if [ scripts/bed_data_analysis_sal_CAGAG_18_12_25_ab.R -nt results/CAGAG_figure_S2.2.AB.tiff \
+  -o dockerfiles/Dockerfile.bed_data_analysis_sal_CAGAG_18_12_25_ab -nt results/CAGAG_figure_S2.2.AB.tiff \
+   ]; then
+  echo "======= Rebuilding CAGAG analysis ======="
+  docker build -t bed_data_analysis_sal_cagag_18_12_25_ab:latest -f dockerfiles/Dockerfile.bed_data_analysis_sal_CAGAG_18_12_25_ab .
+
+  docker run -v $(pwd)/results:/app/results:rw bed_data_analysis_sal_cagag_18_12_25_ab:latest
+fi
+if [ scripts/bed_data_analysis_sal_GATCAG_18_12_25_cd.R -nt results/GATCAG_figure_S2.2.CD.tiff \
+  -o dockerfiles/Dockerfile.bed_data_analysis_sal_GATCAG_18_12_25_cd -nt results/GATCAG_figure_S2.2.CD.tiff \
+   ]; then
+  echo "======= Rebuilding GATCAG analysis ======="
+  docker build -t bed_data_analysis_sal_gatcag_18_12_25_cd:latest -f dockerfiles/Dockerfile.bed_data_analysis_sal_GATCAG_18_12_25_cd .
+
+  docker run -v $(pwd)/results:/app/results:rw bed_data_analysis_sal_gatcag_18_12_25_cd:latest
+fi
+
