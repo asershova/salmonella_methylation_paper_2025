@@ -35,3 +35,12 @@ if [ scripts/bed_data_analysis_sal_GATCAG_18_12_25_cd.R -nt results/GATCAG_figur
   docker run -v $(pwd)/results:/app/results:rw bed_data_analysis_sal_gatcag_18_12_25_cd:latest
 fi
 
+if [ scripts/GATC_comparison_fin_intragenic.R -nt results/PMC9239280_vs_my_data_MEP_LSP_intragenic_fig_S3.1.png \
+  -o dockerfiles/Dockerfile.GATC_comparison_fin_intragenic -nt results/PMC9239280_vs_my_data_MEP_LSP_intragenic_fig_S3.1.png \
+   ]; then
+   echo "======= Rebuilding GATC intragenic comparative analysis (three datasets) ======="
+  docker build -t gatc_comparison_fin_intragenic:latest -f dockerfiles/Dockerfile.GATC_comparison_fin_intragenic .
+
+  docker run -v $(pwd)/results:/app/results:rw gatc_comparison_fin_intragenic:latest
+fi
+
