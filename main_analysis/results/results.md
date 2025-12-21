@@ -1,0 +1,7 @@
+[Figure 1](Fig1.RM_expression.png)
+[Figure 2](GATC_figure_2.png)
+[Figure 3](ATGCAT_figure_3.png)
+[Figure 4](CCWGG_figure_4.png)
+[Figure 5](GATC_transcriptomic_figure_5.png)
+[Figure 6](CCWGG_transcriptomic_figure_6.png)
+[Figure 7](ATGCAT_transcriptomic_figure_7.png)
