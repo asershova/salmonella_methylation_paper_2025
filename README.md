@@ -11,6 +11,7 @@ Oxford Nanopore sequencing data processing
 
 Downstream methylation data processing
 
-Primary analyses used to generate figures and supplementary tables for the main manuscript
+Primary analyses used to generate figures and supplementary tables for the main manuscript.
+[Figures of the main text](main_analysis/results/results.md)
 
 Supplementary analyses used to generate supplementary figures
