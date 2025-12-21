@@ -1,5 +1,6 @@
-# Scripts for processing of nanopore data 
+# Scripts for processing of Nanopore data 
 
+These scripts were used to run Oxford Nanopore data analysis on Fir cluster of [Digital Research Alliance of Canada](https://alliancecan.ca).
 ### Basecalling and demultiplexing of Nanopore data.
 
 m6A, m5C, and m4C models are used
