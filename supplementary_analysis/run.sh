@@ -43,4 +43,12 @@ if [ scripts/GATC_comparison_fin_intragenic.R -nt results/PMC9239280_vs_my_data_
 
   docker run -v $(pwd)/results:/app/results:rw gatc_comparison_fin_intragenic:latest
 fi
+if [ scripts/ATGCAT_comparison_fin.R -nt results/PMC9239280_vs_my_data_UM_ATGCAT_venn_intra_fig_S4.1D.png \
+  -o dockerfiles/Dockerfile.ATGCAT_comparison_fin -nt results/PMC9239280_vs_my_data_UM_ATGCAT_venn_intra_fig_S4.1D.png \
+   ]; then
+   echo "======= Rebuilding ATGCAT comparative analysis (three datasets) ======="
+  docker build -t atgcat_comparison_fin:latest -f dockerfiles/Dockerfile.ATGCAT_comparison_fin .
+
+  docker run -v $(pwd)/results:/app/results:rw atgcat_comparison_fin:latest
+fi
 
