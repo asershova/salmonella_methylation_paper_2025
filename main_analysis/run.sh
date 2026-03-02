@@ -1,5 +1,13 @@
 #!/bin/bash
 #run all scripts to produce all results
+if [ scripts/bed_data_analysis_GAATTC_ROC_salmonella_16_02_2026.R -nt results/GAATTC_fig_S1.1_16_02_2026.tiff \
+  -o dockerfiles/Dockerfile.bed_data_analysis_GAATTC_ROC_salmonella_16_02_2026 -nt results/GAATTC_fig_S1.1_16_02_2026.tiff \
+   ]; then
+  echo "======= Rebuilding bed_data_analysis_GAATTC_ROC_salmonella_16_02_2026 ======="
+  docker build -t bed_data_analysis_gaattc_roc_salmonella_16_02_2026:latest -f dockerfiles/Dockerfile.bed_data_analysis_GAATTC_ROC_salmonella_16_02_2026 .
+  docker run -v $(pwd)/results:/app/results:rw bed_data_analysis_gaattc_roc_salmonella_16_02_2026:latest
+fi
+
 if [ scripts/bed_data_analysis_sal_GATC_28_08.R -nt results/GATC_jitter.tiff \
   -o dockerfiles/Dockerfile.bed_data_analysis_sal_GATC_28_08 -nt results/GATC_jitter.tiff \
    ]; then
