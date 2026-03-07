@@ -78,48 +78,6 @@ reordered_data <- reordered_data %>%
                           "plasmid"))  
 
 ecori_col <- c("#1F77B4FF", "#AEC7E8FF")
-cucm<-wilcox.test(reordered_data[reordered_data$dna_type=="chromosome"&
-                             reordered_data$group=="WT",]$methyl, 
-            reordered_data[reordered_data$dna_type=="chromosome"&
-                             reordered_data$group=="M.EcoRI",]$methyl, alternative = "two.sided")$p.value
-
-cmpm<-wilcox.test(reordered_data[reordered_data$dna_type=="chromosome"&
-                             reordered_data$group=="M.EcoRI",]$methyl, 
-            reordered_data[reordered_data$dna_type=="plasmid"&
-                             reordered_data$group=="M.EcoRI",]$methyl, alternative = "two.sided")$p.value
-pupm<- wilcox.test(reordered_data[reordered_data$dna_type=="plasmid"&
-                             reordered_data$group=="WT",]$methyl, 
-            reordered_data[reordered_data$dna_type=="plasmid"&
-                             reordered_data$group=="M.EcoRI",]$methyl, alternative = "two.sided")$p.value
-pucu<-wilcox.test(reordered_data[reordered_data$dna_type=="plasmid"&
-                             reordered_data$group=="WT",]$methyl, 
-            reordered_data[reordered_data$dna_type=="chromosome"&
-                             reordered_data$group=="WT",]$methyl, alternative = "two.sided")$p.value
-
-
-p1<- ggplot(reordered_data, 
-            aes(x=dna_type, y=methyl, fill=group)) + # fill=name allow to automatically dedicate a color for each group
-  geom_violin()+
-  stat_summary(fun.data = "mean_cl_boot", geom = "pointrange",
-               colour = "black", position=position_dodge(0.9))+
-  scale_x_discrete(labels = c("chromosome", "plasmid")) +
-  scale_fill_manual(values = ecori_col, labels = c("M.EcoRI-\ntreated", "Untreated")) +
-  theme_ipsum(base_family = 'Arial', base_size = 12) +
-  theme(
-    axis.title.x = element_text(size = 12, vjust = 0.5, hjust = 0.5),
-    axis.title.y = element_text(size = 12, vjust = 0.5, hjust = 0.5),
-    legend.position = "bottom",
-    legend.title = element_blank())+
-  labs(x = "", y = "methylation, %")
-
-ggsave(filename = paste(site,"_fig_S1.1_16_02_2026.tiff", sep=""), plot =p1, path = results_dir,
-       scale = 1, width = 180,
-       height = 85, units = c("mm"),
-       dpi = 300, bg = "white")
-ggsave(filename = paste(site,"_fig_S1.1_16_02_2026.png", sep=""), plot =p1, path = results_dir,
-       scale = 1, width = 180,
-       height = 85, units = c("mm"),
-       dpi = 300, bg = "white")
 #ROC curve and thresholds
 
 roc_gaattc <- roc(data_all_methyl_a_ecori_2$gaattc_stat, data_all_methyl_a_ecori_2$methyl)
