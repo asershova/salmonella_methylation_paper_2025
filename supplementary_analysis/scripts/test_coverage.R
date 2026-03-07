@@ -113,11 +113,11 @@ figure <- ggarrange(p1, p2, nrow=2, labels = c("A", "B"), vjust=1,
           font.label = list(size = 12, face = "bold", color ="black", family = 'Arial'))
 
 figure
-ggsave(filename = paste("seq_depth_figure_S1.3.tiff", sep=""), plot =figure, path = results_dir,
+ggsave(filename = paste("seq_depth_figure_S1.2.tiff", sep=""), plot =figure, path = results_dir,
        scale = 1, width = 180,
        height = 156, units = c("mm"),
        dpi = 600, bg = "white")
-ggsave(filename = paste("seq_depth_figure_S1.3.png", sep=""), plot =figure, path = results_dir,
+ggsave(filename = paste("seq_depth_figure_S1.2.png", sep=""), plot =figure, path = results_dir,
        scale = 1, width = 180,
        height = 156, units = c("mm"),
        dpi = 600, bg = "white")

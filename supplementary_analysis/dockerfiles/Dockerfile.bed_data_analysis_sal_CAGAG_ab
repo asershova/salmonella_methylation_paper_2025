@@ -44,21 +44,20 @@ COPY fonts/liberation-fonts-ttf-2.00.1/* /usr/share/fonts/truetype/msttcorefonts
 COPY fonts/*.ttf /usr/share/fonts/truetype/msttcorefonts/
 COPY fonts/static/*.ttf /usr/share/fonts/truetype/msttcorefonts/
 RUN R -e 'library(extrafont); font_import(prompt=FALSE)'
-RUN R -e 'install.packages(c("pROC"))'
-RUN R -e 'install.packages(c("Hmisc"))'
+
 # Set working directory
 WORKDIR /app
 
 # Copy the docker-compatible script
-COPY scripts/bed_data_analysis_GAATTC_ROC_salmonella_16_02_2026_suppl.R /app/script.R
+COPY scripts/bed_data_analysis_sal_CAGAG_ab.R /app/script.R
 
 # Create directories for data and results
 RUN mkdir -p /app/data
 RUN mkdir -p /app/results
 
 # Copy data files
-COPY data/M.EcoRI.GAATTC.bed /app/data/
-COPY data/WT.GAATTC.bed /app/data/
+COPY data/*.CAGAG.bed /app/data/
+
 
 # Set the default command to run the script
 CMD ["Rscript", "script.R"]

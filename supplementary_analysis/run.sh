@@ -1,38 +1,38 @@
 #!/bin/bash
 #run all scripts to produce all results
-if [ scripts/bed_data_analysis_GAATTC_ROC_salmonella_16_02_2026_suppl.R -nt results/GAATTC_fig_S1.1.tiff \
-  -o dockerfiles/Dockerfile.bed_data_analysis_GAATTC_ROC_salmonella_16_02_2026_suppl -nt results/GAATTC_fig_S1.1.tiff \
+if [ scripts/bed_data_analysis_GAATTC_ROC_salmonella_suppl.R -nt results/GAATTC_fig_S1.1.tiff \
+  -o dockerfiles/Dockerfile.bed_data_analysis_GAATTC_ROC_salmonella_suppl -nt results/GAATTC_fig_S1.1.tiff \
    ]; then
   echo "======= Rebuilding ROC curve based on GAATTC data ======="
-  docker build -t bed_data_analysis_gaattc_roc_salmonella_16_02_2026_suppl:latest -f dockerfiles/Dockerfile.bed_data_analysis_GAATTC_ROC_salmonella_16_02_2026_suppl .
+  docker build -t bed_data_analysis_gaattc_roc_salmonella_suppl:latest -f dockerfiles/Dockerfile.bed_data_analysis_GAATTC_ROC_salmonella_suppl .
 
-  docker run -v $(pwd)/results:/app/results:rw bed_data_analysis_gaattc_roc_salmonella_16_02_2026_suppl:latest
+  docker run -v $(pwd)/results:/app/results:rw bed_data_analysis_gaattc_roc_salmonella_suppl:latest
 fi
 
-if [ scripts/test_coverage_18_12_25.R -nt results/seq_depth_figure_S1.3.tiff \
-  -o dockerfiles/Dockerfile.test_coverage_18_12_25 -nt results/seq_depth_figure_S1.3.tiff \
+if [ scripts/test_coverage.R -nt results/seq_depth_figure_S1.3.tiff \
+  -o dockerfiles/Dockerfile.test_coverage -nt results/seq_depth_figure_S1.3.tiff \
    ]; then
   echo "======= Rebuilding sequencing depth test ======="
-  docker build -t test_coverage_18_12_25:latest -f dockerfiles/Dockerfile.test_coverage_18_12_25 .
+  docker build -t test_coverage:latest -f dockerfiles/Dockerfile.test_coverage .
 
-  docker run -v $(pwd)/results:/app/results:rw test_coverage_18_12_25:latest
+  docker run -v $(pwd)/results:/app/results:rw test_coverage:latest
 fi
 
-if [ scripts/bed_data_analysis_sal_CAGAG_18_12_25_ab.R -nt results/CAGAG_figure_S2.2.AB.tiff \
-  -o dockerfiles/Dockerfile.bed_data_analysis_sal_CAGAG_18_12_25_ab -nt results/CAGAG_figure_S2.2.AB.tiff \
+if [ scripts/bed_data_analysis_sal_CAGAG_ab.R -nt results/CAGAG_figure_S2.2.AB.tiff \
+  -o dockerfiles/Dockerfile.bed_data_analysis_sal_CAGAG_ab -nt results/CAGAG_figure_S2.2.AB.tiff \
    ]; then
   echo "======= Rebuilding CAGAG analysis ======="
-  docker build -t bed_data_analysis_sal_cagag_18_12_25_ab:latest -f dockerfiles/Dockerfile.bed_data_analysis_sal_CAGAG_18_12_25_ab .
+  docker build -t bed_data_analysis_sal_cagag_ab:latest -f dockerfiles/Dockerfile.bed_data_analysis_sal_CAGAG_ab .
 
-  docker run -v $(pwd)/results:/app/results:rw bed_data_analysis_sal_cagag_18_12_25_ab:latest
+  docker run -v $(pwd)/results:/app/results:rw bed_data_analysis_sal_cagag_ab:latest
 fi
-if [ scripts/bed_data_analysis_sal_GATCAG_18_12_25_cd.R -nt results/GATCAG_figure_S2.2.CD.tiff \
-  -o dockerfiles/Dockerfile.bed_data_analysis_sal_GATCAG_18_12_25_cd -nt results/GATCAG_figure_S2.2.CD.tiff \
+if [ scripts/bed_data_analysis_sal_GATCAG_cd.R -nt results/GATCAG_figure_S2.2.CD.tiff \
+  -o dockerfiles/Dockerfile.bed_data_analysis_sal_GATCAG_cd -nt results/GATCAG_figure_S2.2.CD.tiff \
    ]; then
   echo "======= Rebuilding GATCAG analysis ======="
-  docker build -t bed_data_analysis_sal_gatcag_18_12_25_cd:latest -f dockerfiles/Dockerfile.bed_data_analysis_sal_GATCAG_18_12_25_cd .
+  docker build -t bed_data_analysis_sal_gatcag_cd:latest -f dockerfiles/Dockerfile.bed_data_analysis_sal_GATCAG_cd .
 
-  docker run -v $(pwd)/results:/app/results:rw bed_data_analysis_sal_gatcag_18_12_25_cd:latest
+  docker run -v $(pwd)/results:/app/results:rw bed_data_analysis_sal_gatcag_cd:latest
 fi
 
 if [ scripts/GATC_comparison_fin_intragenic.R -nt results/PMC9239280_vs_my_data_MEP_LSP_intragenic_fig_S3.1.png \
