@@ -1,12 +1,11 @@
-require(extrafont)
-extrafont::loadfonts(device="all")
+library(extrafont)
 library(ggplot2)
 library(dplyr)
 library(tidyverse)
 library(readxl)
 library(here)
-library(skimr) # install.packages('skimr')
-library(kableExtra) # install.packages('kableExtra')
+library(skimr)
+library(kableExtra)
 library(ggsci)
 library("GGally")
 library(RColorBrewer)
@@ -14,23 +13,23 @@ library(hrbrthemes)
 library("ggpubr")
 library("viridis")
 library(scales)
+options(rgl.useNULL = TRUE)
 library(rgl)
 library(data.table)
 library("ggpubr")
-
-working_dir = "/app/data" # the path to the working directory, you should put your own
-results_dir = "/app/results"
 
 paper_pal <-paletteer::paletteer_d("ggsci::category20_d3")
 status_pal <- paper_pal[1:4]
 violin_color <- c("#C49C94FF","#F7B6D2FF","#C7C7C7FF")
 chi_test_color <- c("#7F7F7FFF","#C7C7C7FF")
-status_pal_2 <- c("#AEC7E8FF","#FFBB78FF","#98DF8AFF","#FF9896FF")
+status_pal_2 <- c("#FF9896FF","#9467BDFF","#2CA02CFF","#1F77B4FF")
 
+working_dir = "/app/data" # the path to the working directory, you should put your own
+results_dir = "/app/results"
 gatc_data <- read.csv(paste(working_dir,"GATC_data_all_flat_table_weight_av.csv", sep="/"), sep="\t", header = TRUE)
 my_data <- read.csv(paste(working_dir,"ST4-74_mydata_GATC_liftover_strand.bed", sep="/"), sep="\t", header = FALSE)
 GSE185578_data <- read.csv(paste(working_dir,"GSE185578_GATC_19_10_25_liftover_strand.bed", sep="/"), sep="\t", header = FALSE)
-data_casadeus <- read.csv(paste(working_dir,"casadeus_undermethyl_liftover_strand.bed", sep = "/"), sep="\t", header =FALSE)
+data_casadeus <- read.csv(paste(working_dir, "casadeus_undermethyl_liftover_strand.bed", sep="/"), sep="\t", header =FALSE)
 colnames(data_casadeus) <- c("chrom", 'site_start', 'site_stop','site', 'rel_num', 'site_dir',
                              'rel_start', 'rel_stop', 'cp_id', 'aln_id', 'chrom2', 'm_start', 
                              'm_stop', 'pos_abs', 'gene', 'm_dir')
@@ -96,18 +95,18 @@ all_under_table_flat <- rbind(all_under_table_flat_mep, all_under_table_flat_lsp
                               all_under_table_flat_PMC9239280, all_under_table_flat_casadeus)
 all_under_table_flat$id <- paste(all_under_table_flat$gene, all_under_table_flat$start,
                                  all_under_table_flat$dir, sep=" ")
-
 all_under_table_flat_intragenic <- all_under_table_flat[all_under_table_flat$`feature type`=="intragenic",]
 all_under_table_flat_intragenic <- merge(all_under_table_flat_intragenic, all_under_table_score_only, by='aln_id')
 all_under_table_flat_intragenic<-arrange(all_under_table_flat_intragenic, venn_category) 
 id_factor2 <- unique(all_under_table_flat_intragenic$id)
+
 ht2v <- ggplot(all_under_table_flat_intragenic, 
                aes(factor(sample, c("MEP", "LSP","PMC7708049", "PMC9239280")),
                    factor(id, id_factor2),
                    fill= methyl)) + 
   geom_tile(color = "white",lwd = 1, linetype = 1) +
-  scale_fill_gradient(low = "#FF9896FF",
-                      high = "#AEC7E8FF") +
+  scale_fill_gradient(low = "#AEC7E8FF",
+                      high = "#FF9896FF", na.value="#eceeeb") +
   scale_x_discrete(position = "top", labels = c("MEP", "LSP","set1", "set2")) +
   labs(fill = "methylation (%)") +
   theme(
@@ -123,6 +122,7 @@ ht2v <- ggplot(all_under_table_flat_intragenic,
     
   ) +
   guides(fill = guide_colourbar(title.position="top", title.hjust = 0.5))
+ht2v
 
 intragenic_data <- combined_data[combined_data$`feature type`=='intragenic',]
 intragenic_data_MEP <- intragenic_data[intragenic_data$`methylation status`=="MEP-specific",]
@@ -152,7 +152,8 @@ figure_intra <- ggarrange(ht2v, gg12, common.legend=FALSE,
                     labels = c("A", "B"),
                     ncol = 2, nrow = 1, vjust=1, 
                     legend="bottom")
-ggsave(filename = "PMC9239280_vs_my_data_MEP_LSP_intragenic_fig_S3.1.png", 
+
+ggsave(filename = "Fig.S3.1.png", 
        plot =figure_intra, path = results_dir,
        scale = 1, width = 180,
        height = 120, units = c("mm"),

@@ -9,8 +9,8 @@ if [ scripts/bed_data_analysis_GAATTC_ROC_salmonella_suppl.R -nt results/GAATTC_
   docker run -v $(pwd)/results:/app/results:rw bed_data_analysis_gaattc_roc_salmonella_suppl:latest
 fi
 
-if [ scripts/test_coverage.R -nt results/seq_depth_figure_S1.3.tiff \
-  -o dockerfiles/Dockerfile.test_coverage -nt results/seq_depth_figure_S1.3.tiff \
+if [ scripts/test_coverage.R -nt results/seq_depth_figure_S1.2.tiff \
+  -o dockerfiles/Dockerfile.test_coverage -nt results/seq_depth_figure_S1.2.tiff \
    ]; then
   echo "======= Rebuilding sequencing depth test ======="
   docker build -t test_coverage:latest -f dockerfiles/Dockerfile.test_coverage .
@@ -35,16 +35,16 @@ if [ scripts/bed_data_analysis_sal_GATCAG_cd.R -nt results/GATCAG_figure_S2.2.CD
   docker run -v $(pwd)/results:/app/results:rw bed_data_analysis_sal_gatcag_cd:latest
 fi
 
-if [ scripts/GATC_comparison_fin_intragenic.R -nt results/PMC9239280_vs_my_data_MEP_LSP_intragenic_fig_S3.1.png \
-  -o dockerfiles/Dockerfile.GATC_comparison_fin_intragenic -nt results/PMC9239280_vs_my_data_MEP_LSP_intragenic_fig_S3.1.png \
+if [ scripts/GATC_comparison_fin_intragenic.R -nt results/Fig.S3.1.png \
+  -o dockerfiles/Dockerfile.GATC_comparison_fin_intragenic -nt results/Fig.S3.1.png \
    ]; then
    echo "======= Rebuilding GATC intragenic comparative analysis (three datasets) ======="
   docker build -t gatc_comparison_fin_intragenic:latest -f dockerfiles/Dockerfile.GATC_comparison_fin_intragenic .
 
   docker run -v $(pwd)/results:/app/results:rw gatc_comparison_fin_intragenic:latest
 fi
-if [ scripts/ATGCAT_comparison_fin.R -nt results/PMC9239280_vs_my_data_UM_ATGCAT_venn_intra_fig_S4.1D.png \
-  -o dockerfiles/Dockerfile.ATGCAT_comparison_fin -nt results/PMC9239280_vs_my_data_UM_ATGCAT_venn_intra_fig_S4.1D.png \
+if [ scripts/ATGCAT_comparison_fin.R -nt results/Fig.S4.1_AB.png \
+  -o dockerfiles/Dockerfile.ATGCAT_comparison_fin -nt results/Fig.S4.1_AB.png \
    ]; then
    echo "======= Rebuilding ATGCAT comparative analysis (three datasets) ======="
   docker build -t atgcat_comparison_fin:latest -f dockerfiles/Dockerfile.ATGCAT_comparison_fin .

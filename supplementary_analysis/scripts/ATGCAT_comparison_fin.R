@@ -1,32 +1,31 @@
-require(extrafont)
-extrafont::loadfonts(device="all")
+library(extrafont)
+library("hrbrthemes")
 library(ggplot2)
 library(dplyr)
 library(tidyverse)
 library(readxl)
 library(here)
-library(skimr) # install.packages('skimr')
-library(kableExtra) # install.packages('kableExtra')
+library(skimr)
+library(kableExtra)
 library(ggsci)
 library("GGally")
 library(RColorBrewer)
-library(hrbrthemes)
 library("viridis")
 library(scales)
+options(rgl.useNULL = TRUE)
 library(rgl)
 library(data.table)
 library("ggpubr")
 library("VennDiagram")
-working_dir = "/app/data" # the path to the working directory, you should put your own
-results_dir = "/app/results"
 
 site='ATGCAT'
 paper_pal <-paletteer::paletteer_d("ggsci::category20_d3")
 status_pal <- paper_pal[1:4]
 violin_color <- c("#C49C94FF","#F7B6D2FF","#C7C7C7FF")
 chi_test_color <- c("#7F7F7FFF","#C7C7C7FF")
-status_pal_2 <- c("#AEC7E8FF","#FFBB78FF","#98DF8AFF","#FF9896FF")
-
+status_pal_2 <- c("#FF9896FF","#9467BDFF","#2CA02CFF","#1F77B4FF")
+working_dir = "/app/data" # the path to the working directory, you should put your own
+results_dir = "/app/results"
 gatc_data <- read.csv(paste(working_dir,"ATGCAT_data_all_flat_table_weight_av.csv", sep="/"), sep="\t", header = TRUE)
 my_data <- read.csv(paste(working_dir,"ST4-74_mydata_ATGCAT_liftover_strand.bed", sep="/"), sep="\t", header = FALSE)
 GSE185578_data <- read.csv(paste(working_dir,"GSE185578_ATGCAT_liftover_strand.bed", sep="/"), sep="\t", header = FALSE)
@@ -80,8 +79,8 @@ gg1<-ggplot(combined_data[combined_data$PMC9239280p > -1,], aes(x=LSP, y=PMC9239
     legend.text = element_text(size = 10),
     legend.spacing = unit(1, "mm")
   )
-
-ggsave(filename = "PMC9239280_vs_my_data_LSP_ATGCAT_fig.S4.1_AB.png", plot =gg1, 
+gg1
+ggsave(filename = "Fig.S4.1_AB.png", plot =gg1, 
        path = results_dir,
        scale = 1, width = 178,
        height = 78, units = c("mm"),
@@ -111,7 +110,7 @@ venn_list_intragenic <- list(combined_data[combined_data$PMC9239280p==0&
 venn.diagram(
   x = venn_list_inter,
   category.names = c("set2","This work"),
-  filename = paste(results_dir,'PMC9239280_vs_my_data_UM_ATGCAT_venn_inter_figS4.1C.png',sep="/"),
+  filename = paste(results_dir,'Fig.S4.1_C.png', sep = "/"),
   output = TRUE ,
   imagetype="png" ,
   height = 78,
@@ -127,15 +126,12 @@ venn.diagram(
   cat.cex = .7,
   cat.default.pos = "outer",
   cat.pos = c(-27, 135),
-  #cat.dist = c(0.055, 0.085),
   cat.fontfamily = "Arial"
-  #cat.col = c("#2CA02CFF", '#7F7F7FFF', '#FF9896FF'),
-  #rotation = 1
 )
 venn.diagram(
   x = venn_list_intragenic,
   category.names = c("set2","This work"),
-  filename = paste(results_dir, 'PMC9239280_vs_my_data_UM_ATGCAT_venn_intra_fig_S4.1D.png', sep = "/"),
+  filename = paste(results_dir,'Fig.S4.1_D.png', sep = "/"),
   output = TRUE ,
   imagetype="png" ,
   height = 78,
