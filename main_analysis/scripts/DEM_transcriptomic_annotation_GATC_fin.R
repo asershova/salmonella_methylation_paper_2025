@@ -1,5 +1,3 @@
-require(extrafont)
-extrafont::loadfonts(device="all")
 library(ggplot2)
 library(dplyr)
 library(tidyverse)
@@ -19,10 +17,10 @@ library(data.table)
 library("ggpubr")
 library("multimode")
 
-working_dir = "/app/data" # the path to the working directory, you should put your own
+working_dir = "/app/data"
 results_dir = "/app/results"
-gatc_methyl <- read.csv(paste(working_dir, "GATC_data_all_flat_table_weight_av.csv", sep = "/"), sep="", header = TRUE)
-lsp_mep <- read.csv(paste(working_dir, "LSP_MEP.clipped.deseq_results.05.csv", sep = "/"), sep=",", header = FALSE,skip=1,
+gatc_methyl <- read.csv(paste(results_dir, "GATC_data_all_flat_table_weight_av.csv",sep = "/"), sep="", header = TRUE)
+lsp_mep <- read.csv(paste(working_dir,"LSP_MEP.clipped.deseq_results.05.csv", sep = "/"), sep=",", header = FALSE,skip=1,
                     col.names=c("locus_tag", "baseMean","log2FoldChange", "lfcSE","stat","pvalue", "padj"))
 site = "GATC"
 
@@ -52,8 +50,8 @@ methyl_dir_pv <- methyl_dir %>%
 methyl_dir_pv_wide <- methyl_dir_pv %>%
   pivot_wider(names_from = methyl_status, 
               values_from = n)
-#write.table(methyl_dir_pv_wide, file = paste(working_dir,site,"_intergenic_pos_dir.csv",sep=""),
-#            sep = "\t", row.names = F)
+write.table(methyl_dir_pv_wide, file = paste(results_dir,"/",site,"_intergenic_pos_dir.csv",sep=""),
+            sep = "\t", row.names = F)
 methyl_dir_pv_wide[is.na(methyl_dir_pv_wide)]<-0
 as.table(as.matrix(methyl_dir_pv_wide))
 methyl_dir_pv_wide_df<-as.data.frame(methyl_dir_pv_wide)
@@ -106,7 +104,7 @@ gatc_gene_data_all <- rbind(all_intergenic_combined, gene_body_all)
 gatc_gene_data_nu <- rbind(all_intergenic_combined, gene_body_nu)#gene body only genes not affected by intergenic methyllation
 
 all_pos_transcript_total <- merge(gatc_gene_data_all, lsp_mep, by.x = "affected_lt", by.y="locus_tag")
-write.csv(all_pos_transcript_total, file = paste(working_dir, "Suppl_Table_GATC_all_methyl_gene_expression.txt", sep=""),
+write.csv(all_pos_transcript_total, file = paste(results_dir, "Suppl_Table_GATC_all_methyl_gene_expression.txt", sep="/"),
           sep= ",", row.names = FALSE)
 
 all_pos_transcript_total[all_pos_transcript_total$affected_lt=="SL1344_3797"&
@@ -118,38 +116,9 @@ all_pos_transcript_total_pv <- all_pos_transcript_total %>%
 all_pos_transcript <- merge(gatc_gene_data_nu, lsp_mep, by.x = "affected_lt", by.y="locus_tag")
 um_gatc_list <-unique(gatc_gene_data_nu[gatc_gene_data_nu$methyl_status=="UM",]$affected_lt)
 
-#write.csv(unique(gatc_methyl[gatc_methyl$locus_tag%in%um_gatc_list,]$id2), file = paste(working_dir, "GATC_UM_upstream.txt", sep=""),
-#          sep= "\n", row.names = FALSE)
+write.csv(unique(gatc_methyl[gatc_methyl$locus_tag%in%um_gatc_list,]$id2), file = paste(results_dir, "GATC_UM_upstream.txt", sep="/"),
+          sep= "\n", row.names = FALSE)
 
-#plot with log2FCexpression/logFCmethyl
-
-#figA
-# New facet label names for supp variable
-feature.labs <- c("Gene", "Upstream")
-names(feature.labs) <- c("intragenic", "intergenic")
-
-p_log2_FC<-ggplot(all_pos_transcript%>%
-                    arrange(methyl_status),
-                  aes(y=log2FCMethyl, x=log2FoldChange, color=methyl_status)) + 
-  labs(x = "Log2FC") +
-  geom_point(alpha=0.9) +
-  facet_wrap(~feature, labeller = labeller(feature = feature.labs)) +
-  scale_color_manual(values=status_pal_2) +
-#  ylim(-2,4) +
-  geom_vline(xintercept = -1, linetype="dashed") +
-  geom_vline(xintercept = 1, linetype="dashed")+
-  theme_ipsum(base_family = 'Arial', base_size = 12) +
-  theme(
-    axis.title.y = element_text(size = 12, vjust = 0.8, hjust = 0.5),
-    axis.title.x = element_text(size = 12, vjust = 0.8, hjust = 0.5),
-    axis.text.x=element_text(size = 12, vjust = 0.4, hjust = 0.4),
-    axis.text.y=element_text(size = 12, vjust = 0.4, hjust = 0.4),
-    plot.margin=unit(c(15,0,10,10), "pt"),
-    legend.position="none",
-    legend.spacing = unit(1, "mm")
-    
-  )
-p_log2_FC
 
 
 ##methylation thresholds FC
@@ -173,9 +142,9 @@ inter_05_methyl_lsp_genes_total_gatc_wide <- inter_05_methyl_lsp_genes_total_gat
               values_from = n)
 inter_05_methyl_lsp_genes_total_gatc_wide_inter <- inter_05_methyl_lsp_genes_total_gatc_wide[
   inter_05_methyl_lsp_genes_total_gatc_wide$feature=="intergenic",]  #change NA to 0 and save the table as suppls
-#write.csv(unique(gatc_methyl[gatc_methyl$locus_tag%in%
-#            inter_05_methyl_lsp$affected_lt,]$id2), file = paste(working_dir, "GATC_DM_upstream_id.txt", sep=""),
-#          sep= "\n", row.names = FALSE)
+write.csv(unique(gatc_methyl[gatc_methyl$locus_tag%in%
+            inter_05_methyl_lsp$affected_lt,]$id2), file = paste(results_dir, "GATC_DM_upstream_id.txt", sep="/"),
+          sep= "\n", row.names = FALSE)
 
 lsp_mep<- lsp_mep %>%mutate(
   DM_sites = case_when(
@@ -199,100 +168,23 @@ my_comparisons_dm <- list(c("DM", "other"))
 my_comparisons_igb <- list(c("DM in gene body", "other"),
                           c("DM in upstream", "other"),
                           c("DM in gene body", "DM in upstream"))
-#figD
-violins_dm<-ggplot(lsp_mep, aes(y=log2FoldChange, x=factor(DM_sites_i_gb, 
+
+violins_dm<-ggplot(lsp_mep, aes(y=log2FoldChange, x=factor(DM_sites_i_gb,
                                                         levels=c("DM in upstream", "DM in gene body", "other")),
-                             fill=DM_sites_i_gb)) + 
+                             fill=DM_sites_i_gb)) +
   geom_violin() +
   stat_compare_means(comparisons = my_comparisons_igb)+
   geom_boxplot(width=0.1, color="black", alpha=0.2) +
   scale_x_discrete(labels= c("Upstream\nn=31", "Gene\nn=23", "Other\nn=4978"))+
-  scale_fill_manual(values = c("#C49C94FF","#F7B6D2FF","#C7C7C7FF"))+  
+  scale_fill_manual(values = c("#C49C94FF","#F7B6D2FF","#C7C7C7FF"))+
   ylim(NA, 22) +
   theme_ipsum(base_family = 'Arial', base_size = 10) +
   theme(
-    axis.title.y = element_text(size = 12, vjust = 0.8, hjust = 0.5),
+    axis.title.y = element_blank(), #text(size = 10, vjust = 0.8, hjust = 0.5),
     axis.title.x = element_blank(),
-    axis.text.x=element_text(size = 12, vjust = 0.4, hjust = 0.4),
-    axis.text.y=element_text(size = 12, vjust = 0.4, hjust = 0.4),
+    axis.text.x=element_text(size = 10, vjust = 0.4, hjust = 0.4),
+    axis.text.y=element_text(size = 10, vjust = 0.4, hjust = 0.4),
     plot.margin=unit(c(20,0,10,10), "pt"),
     legend.position="none")
+saveRDS(violins_dm, file = paste(results_dir,"/",site,"_violin_ggplot.rds", sep=""))
 
-violins_dm
-#chi-square test
-lsp_mep_igb_pv<-lsp_mep%>%
-  group_by(DM_sites_i_gb, DEG)%>%
-  summarise(n=n(), .groups="keep")
-
-chi_inter_wide<-lsp_mep_igb_pv%>% 
-  pivot_wider(names_from = DEG, 
-              values_from = n)
-chi_inter_wide
-m_i_o = matrix(c(25,6,3113,1865), ncol=2)
-m_i_gb = matrix(c(25,6,15,8), ncol=2)
-m_gb_o=matrix(c(15,8,3113,1865),ncol=2)
-p_chi_mio<-chisq.test(x=m_i_o)$p.value
-p_chi_migb<-chisq.test(x=m_i_gb)$p.value
-p_chi_gbo<-chisq.test(x=m_gb_o)$p.value
-
-#figC
-stacked_bar<-ggplot(lsp_mep_igb_pv, 
-                    aes(fill=DEG, y=n, x=factor(DM_sites_i_gb, 
-                                                       levels=c("DM in upstream", "DM in gene body", "other")))) + 
-  geom_bar(position="fill", stat="identity") +
-  scale_fill_manual(values = c("#7F7F7FFF","#C7C7C7FF"))+
-  labs(x = "group", y = "genes (%)", fill = "") +
-  scale_x_discrete(labels= c("Upstream\nn=31", "Gene\nn=23","Other\nn=4978"))+
-  ggsignif::geom_signif(annotations = c(0.96,0.06,0.33), comparisons=my_comparisons_igb,y_position=c(-154.3, -154.1, -153.9),
-                        map_signif_level = TRUE,tip_length=0.00001, size = 0.3)+
-  coord_cartesian(ylim = c(0, 1.6)) +
-  scale_y_continuous(labels = scales::label_percent(suffix="")) +
-  theme_ipsum(base_family = 'Arial', base_size = 10) +
-  theme(
-    axis.title.y = element_text(size = 12, vjust = 0.8, hjust = 0.5),
-    axis.title.x = element_blank(),
-    axis.text.x=element_text(size = 12, angle=45, vjust = 0.4, hjust = 0.4),
-    axis.text.y=element_text(size = 12, vjust = 0.4, hjust = 0.4),
-    plot.margin=unit(c(15,0,10,10), "pt"),
-    legend.spacing.x = unit(30, "mm"),
-    legend.position="right",
-    legend.text = element_text(size = 10)
-    
-  )
-stacked_bar
-#fig B
-p_genomic_pos<-ggplot(all_pos_transcript%>%
-                        arrange(methyl_status), #[all_pos_transcript$methyl_status!="Constitutive",]
-                      aes(y=log2FCMethyl, x=rel_genomic_pos, color=methyl_status)) + 
-  geom_point(alpha=0.7) +
-  xlim(-500,+500) +
-  scale_color_manual(values=status_pal_2) + #[2:4]
-  theme_ipsum(base_family = 'Arial', base_size = 12) +
-  geom_vline(xintercept = -250, linetype="dashed") +
-  geom_vline(xintercept = 0, linetype="dashed")+
-  labs(color = "methylation status", x = "Relative position") +
-  theme(
-    axis.title.y = element_text(size = 12, vjust = 0.8, hjust = 0.5),
-    axis.title.x = element_text(size = 12, vjust = 0.8, hjust = 0.5),
-    axis.text.x=element_text(size = 12, angle=45,vjust = 0.4, hjust = 0.4),
-    axis.text.y=element_text(size = 12, vjust = 0.4, hjust = 0.4),
-    plot.margin=unit(c(15,0,10,10), "pt"),
-    legend.spacing = unit(1, "mm")
-  )
-
-p_genomic_pos
-figure <- ggarrange(p_log2_FC,p_genomic_pos, stacked_bar, violins_dm,
-                    labels = c("A", "B", "C", "D"),
-                    ncol = 2, nrow = 2, vjust=1)
-figure
-
-ggsave(filename = paste(site,"_transcriptomic_figure_5.tiff", sep=""), plot =figure, 
-       path = results_dir,
-       scale = 1, width = 180,
-       height = 156, units = c("mm"),
-       dpi = 300, bg = "white")
-ggsave(filename = paste(site,"_transcriptomic_figure_5.png", sep=""), plot =figure, 
-       path = results_dir,
-       scale = 1, width = 180,
-       height = 156, units = c("mm"),
-       dpi = 300, bg = "white")

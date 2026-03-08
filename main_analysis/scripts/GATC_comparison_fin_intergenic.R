@@ -1,5 +1,4 @@
-require(extrafont)
-extrafont::loadfonts(device="all")
+library(extrafont)
 library(ggplot2)
 library(dplyr)
 library(tidyverse)
@@ -25,14 +24,13 @@ paper_pal
 status_pal <- paper_pal[1:4]
 violin_color <- c("#C49C94FF","#F7B6D2FF","#C7C7C7FF")
 chi_test_color <- c("#7F7F7FFF","#C7C7C7FF")
-status_pal_2 <- c("#AEC7E8FF","#FFBB78FF","#98DF8AFF","#FF9896FF")
-working_dir = "/app/data" # the path to the working directory, you should put your own
+status_pal_2 <- c("#FF9896FF","#9467BDFF","#2CA02CFF","#1F77B4FF")
+working_dir = "/app/data"
 results_dir = "/app/results"
-
-gatc_data <- read.csv(paste(working_dir,"GATC_data_all_flat_table_weight_av.csv", sep="/"), sep="\t", header = TRUE)
+gatc_data <- read.csv(paste(working_dir,"GATC_data_all_flat_table_weight_av.csv", sep="/"), sep="\t", header = TRUE) #GATC_data_all_flat_table_weight_av.csv
 my_data <- read.csv(paste(working_dir,"ST4-74_mydata_GATC_liftover_strand.bed", sep="/"), sep="\t", header = FALSE)
 GSE185578_data <- read.csv(paste(working_dir,"GSE185578_GATC_19_10_25_liftover_strand.bed", sep="/"), sep="\t", header = FALSE)
-data_casadeus <- read.csv(paste(working_dir,"casadeus_undermethyl_liftover_strand.bed", sep="/"), sep="\t", header =FALSE)
+data_casadeus <- read.csv(paste(working_dir, "casadeus_undermethyl_liftover_strand.bed",sep = "/"), sep="\t", header =FALSE)
 colnames(data_casadeus) <- c("chrom", 'site_start', 'site_stop','site', 'rel_num', 'site_dir',
                              'rel_start', 'rel_stop', 'cp_id', 'aln_id', 'chrom2', 'm_start', 
                              'm_stop', 'pos_abs', 'gene', 'm_dir')
@@ -112,8 +110,8 @@ ht1v <- ggplot(all_under_table_flat_intergenic,
                     factor(id, id_factor),
                     fill= methyl)) + 
   geom_tile(color = "white",lwd = 1, linetype = 1) +
-  scale_fill_gradient(low = "#FF9896FF",
-                      high = "#AEC7E8FF") +
+  scale_fill_gradient(low = "#AEC7E8FF",
+                      high = "#FF9896FF", na.value="#eceeeb") +
   scale_x_discrete(position = "top", labels = c("MEP", "LSP","set1", "set2")) +
   labs(fill = "methylation (%)") +
   theme(
@@ -123,14 +121,12 @@ ht1v <- ggplot(all_under_table_flat_intergenic,
     axis.text.x=element_text(size = 10, vjust = 0.4, hjust = 0.4, color="black"),
     axis.text.y=element_text(size = 8, vjust = 0.4, hjust = 0.4, color="black"),
     legend.position = "bottom",
-    legend.title = element_text(size = 8),
-    legend.text = element_text(size = 8),
+    legend.title = element_text(size = 10),
+    legend.text = element_text(size = 10),
     legend.spacing = unit(1, "mm"),
-    ) +
- guides(fill = guide_colourbar(title.position="top", title.hjust = 0.5))
-ht1v
-
-
+     
+  ) +
+  guides(fill = guide_colourbar(title.position="top", title.hjust = 0.5))
 
 gg1<-ggplot(combined_data[combined_data$`feature type`=='intergenic',], aes(x=LSP, y=`PMC9239280,%`, 
                                colour = `methylation status`)) + 
@@ -138,7 +134,7 @@ gg1<-ggplot(combined_data[combined_data$`feature type`=='intergenic',], aes(x=LS
   labs(y = 'set2', x = 'LSP',
        color = "methylation status") +
   scale_colour_manual(values=status_pal_2) +
-  theme_ipsum(base_family = 'Arial', base_size = 12) +
+  theme_ipsum(base_family = 'Arial', base_size = 10) +
   guides(colour = guide_legend(nrow = 2)) +
   theme(
     axis.title.x = element_text(size = 12, vjust = 0.8, hjust = 0.5),
@@ -150,7 +146,6 @@ gg1<-ggplot(combined_data[combined_data$`feature type`=='intergenic',], aes(x=LS
     legend.text = element_text(size = 10),
     legend.spacing = unit(1, "mm")
   )
-gg1
 
 ggsave(filename = "PMC9239280_vs_my_data_LSP.png", plot =gg1, path = results_dir,
        scale = 1, width = 89,
@@ -160,7 +155,6 @@ ggsave(filename = "PMC9239280_vs_my_data_LSP.png", plot =gg1, path = results_dir
 UM_combined <-combined_data[combined_data$V37=="intergenic"&
                 combined_data$V35=="UM",]
 
-#heat_all
 set_my_data <- unique(my_data$V10)
 set_GSE_data <- unique(GSE185578_data$V10)
 data_intersect <-intersect(set_my_data,set_GSE_data)
@@ -179,7 +173,7 @@ venn_list <- list(all_under_table_intergenic[all_under_table_intergenic$casadeus
 venn.diagram(
   x = venn_list,
   category.names = c("set1","set2","This work"),
-  filename = paste(results_dir, 'GATC_venn_3_figure_8C.tiff',sep='/'),
+  filename = paste(results_dir,'Fig_7_C.tiff', sep = "/"),
   output = TRUE ,
   imagetype="tiff" ,
   height = 78,
@@ -197,7 +191,6 @@ venn.diagram(
   cat.pos = c(-27, 27, 135),
   cat.dist = c(0.055, 0.055, 0.085),
   cat.fontfamily = "Arial",
-  #cat.col = c("#2CA02CFF", '#7F7F7FFF', '#FF9896FF'),
   rotation = 1
 )
 
@@ -205,9 +198,14 @@ venn.diagram(
 figure1v <- ggarrange(ht1v,                                                 # First row with scatter plot
                      ggarrange(gg1, nrow = 2), # Second row with box and dot plots
                      ncol = 2)                                    # Labels of the scatter plot
-figure1v
 
-ggsave(filename = "all_vs_all_fig_v_figure_8_AB.tiff", plot =figure1v, path = results_dir,
+ggsave(filename = "Fig_7_AB.tiff", plot =figure1v, 
+       path = results_dir,
+       scale = 1, width = 180,
+       height = 170, units = c("mm"),
+       dpi = 600, bg = "white")
+ggsave(filename = "Fig_7_AB.png", plot =figure1v, 
+       path = results_dir,
        scale = 1, width = 180,
        height = 170, units = c("mm"),
        dpi = 600, bg = "white")
