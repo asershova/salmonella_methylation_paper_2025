@@ -1,0 +1,35 @@
+Run,growth_conditions,Group,Reps
+SRR951027,Growth in Lennox broth to OD600 0.1,EEP,1
+SRR951028,Growth in Lennox broth to OD600 0.3,MEP dRNA,1
+SRR951029,Growth in Lennox broth to OD600 0.3,MEP,1
+SRR951030,Growth in Lennox broth to OD600 0.3,MEP,2
+SRR951031,Growth in Lennox broth to OD600 0.3,MEP,3
+SRR951032,Growth in Lennox broth to OD600 1.0,LEP,1
+SRR951033,Growth in Lennox broth to OD600 2.0,ESP dRNA,1
+SRR951034,Growth in Lennox broth to OD600 2.0,ESP,11
+SRR951035,Growth in Lennox broth to OD600 2.0,ESP,12
+SRR951036,Growth in Lennox broth to OD600 2.0,ESP,21
+SRR951037,Growth in Lennox broth to OD600 2.0 + 6 h,LSP dRNA,1
+SRR951038,Growth in Lennox broth to OD600 2.0 + 6 h,LSP,1
+SRR951039,Growth in Lennox broth to OD600 2.0 + 6 h,LSP,2
+SRR951040,Growth in Lennox broth to OD600 0.3 at 25°C,,
+SRR951041,"Growth in Lennox broth to OD600 0.3 at 25°C, then transfer for 10 min to 37°C",,
+SRR951042,"Growth in Lennox broth to OD600 0.3 at 25°C, then transfer for 20 min to 37°C",,
+SRR951043,"Growth in Lennox broth to OD600 0.3, then transfer for 10 min from 37°C to 15°C",,
+SRR951044,"Growth in Lennox broth to OD600 0.3 then cells were harvested by centrifugation, resuspended in fresh Lennox pH3.0 and grown for additional 10 min",,
+SRR951045,"Growth in Lennox broth to OD600 0.3; then cells were harvested by centrifugation, resuspended in fresh Lennox pH5.8 and grown for additional 10 min",,
+SRR951046,Growth in Lennox broth to OD600 0.3; then addition of NaCl to a final concentration of 0.3 M for 10 min,,
+SRR951047,"Growth in Lennox broth to OD600 0.3; then addition of 2,2'-dipyridyl to a final concentration of 0.2 mM for 10 min",,
+SRR951048,Growth in Lennox broth to OD600 0.3; then addition of bile to a final concentration of 3% for 10 min,,
+SRR951049,"Growth in Lennox broth to OD600 0.3 (50 ml), then filled into 50 ml closed Falcon tube and incubated without agitation for 30 min at 37°C",,
+SRR951050,Static growth in Lennox broth to OD600 0.3 in a completely filled and closed 50 ml Falcon tube,,
+SRR951051,"Static growth in Lennox broth to OD600 0.3 in a completely filled and closed 50 ml Falcon tube; then 15 min aerobic growth (baffled flask, 250 rpm)",,
+SRR951052,"Growth in PCN medium to OD600 0.3 (pH 7.4, 25 mM Pi)",,
+SRR951053,"Growth in PCN medium to OD600 0.3 (pH 5.8, 0.4 mM Pi)",,
+SRR951054,"Growth in PCN medium to OD600 0.3 (pH 5.8, 0.4 mM Pi)",,
+SRR951055,"Growth in PCN medium to OD600 0.3 (pH 5.8, 0.4 mM Pi)",,
+SRR951056,"Growth in PCN medium with 10 µM MgCl2 to OD600 0.3 (pH 5.8, 0.4 mM Pi)",,
+SRR951057,"PCN to OD600 0.3, then addition of H2O2 to final concentration of 1 mM H2O2 for 12 min",,
+SRR951058,"Growth in PCN medium to OD600 0.3 (pH 5.8, 0.4 mM Pi): then addition of 250 µM Spermine NONOate for 20 min",,
+SRR951059,All 22 conditions pooled,,
+SRR951060,All 22 conditions pooled,,
