@@ -35,14 +35,14 @@ if [ scripts/bed_data_analysis_sal_ATGCAT.R -nt results/ATGCAT_fig_3.tiff \
   docker run -v $(pwd)/results:/app/results:rw bed_data_analysis_sal_atgcat:latest
 fi
 
-#if [ gene_expression_vis_salmonella_fin.R -nt results/Fig1.RM_expression.tiff \
-#  -o dockerfiles/Dockerfile.gene_expression_vis_salmonella_fin -nt results/Fig1.RM_expression.tiff \
-#   ]; then
-#  echo "======= Rebuilding gene_expression_vis_salmonella_fin ======="
-#  docker build -t gene_expression_vis_salmonella_fin:latest -f dockerfiles/Dockerfile.gene_expression_vis_salmonella_fin .
-#
-#  docker run -v $(pwd)/results:/app/results:rw gene_expression_vis_salmonella_fin:latest
-#fi
+if [ gene_expression_vis_salmonella.R -nt results/Fig_5_TPM_LFC_methyl_mean.tiff \
+  -o dockerfiles/Dockerfile.gene_expression_vis_salmonella -nt results/Fig_5_TPM_LFC_methyl_mean.tiff \
+   ]; then
+  echo "======= Rebuilding gene_expression_vis_salmonella ======="
+  docker build -t gene_expression_vis_salmonella:latest -f dockerfiles/Dockerfile.gene_expression_vis_salmonella .
+
+  docker run -v $(pwd)/results:/app/results:rw gene_expression_vis_salmonella:latest
+fi
 if [ DEM_transcriptomic_annotation_GATC_fin.R -nt results/GATC_DM_upstream_id.txt \
   -o dockerfiles/Dockerfile.DEM_transcriptomic_annotation_GATC_fin -nt results/GATC_DM_upstream_id.txt \
    ]; then
@@ -86,8 +86,8 @@ if [ GATC_comparison_fin_intergenic.R -nt results/all_vs_all_fig_v_figure_8_AB.t
 
   docker run -v $(pwd)/results:/app/results:rw gatc_comparison_fin_intergenic:latest
 fi
-if [ NanoViz_fin.R -nt results/pheatmap_plus_lsp_qval_fig9_D.tiff \
-  -o dockerfiles/Dockerfile.NanoViz_fin -nt results/pheatmap_plus_lsp_qval_fig9_D.tiff \
+if [ NanoViz_fin.R -nt results/Fig_8_D.tiff \
+  -o dockerfiles/Dockerfile.NanoViz_fin -nt results/Fig_8_D.tiff \
    ]; then
   echo "======= Rebuilding heterogeneity example ======="
   docker build -t nanoviz_fin:latest -f dockerfiles/Dockerfile.NanoViz_fin .
